@@ -1,0 +1,16 @@
+# Spec / internal design notes — kept local, not published
+docs/
+
+# Curator working data
+.curator/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.pytest_cache/
+
+# OS
+.DS_Store
