@@ -7,19 +7,19 @@ import os
 import shutil
 import time
 
-CURATOR_DIR = ".curator"
+WORKDIR = ".memory-doctor"
 SNAP_DIR = "snapshots"
 CHANGELOG = "changelog.md"
 
 
-def _curator_root(root: str) -> str:
-    return os.path.join(root, CURATOR_DIR)
+def _workdir_root(root: str) -> str:
+    return os.path.join(root, WORKDIR)
 
 
 def snapshot(root: str) -> str:
     """Copy every *.md (and MEMORY.md) into a timestamped snapshot. Returns its path."""
     ts = time.strftime("%Y%m%d-%H%M%S")
-    dest = os.path.join(_curator_root(root), SNAP_DIR, ts)
+    dest = os.path.join(_workdir_root(root), SNAP_DIR, ts)
     os.makedirs(dest, exist_ok=True)
     for entry in os.listdir(root):
         if entry.endswith(".md"):
@@ -28,7 +28,7 @@ def snapshot(root: str) -> str:
 
 
 def latest_snapshot(root: str):
-    base = os.path.join(_curator_root(root), SNAP_DIR)
+    base = os.path.join(_workdir_root(root), SNAP_DIR)
     if not os.path.isdir(base):
         return None
     snaps = sorted(d for d in os.listdir(base) if os.path.isdir(os.path.join(base, d)))
@@ -44,7 +44,7 @@ def restore(root: str, snap: str) -> int:
 
 
 def log_change(root: str, message: str) -> None:
-    os.makedirs(_curator_root(root), exist_ok=True)
-    path = os.path.join(_curator_root(root), CHANGELOG)
+    os.makedirs(_workdir_root(root), exist_ok=True)
+    path = os.path.join(_workdir_root(root), CHANGELOG)
     with open(path, "a", encoding="utf-8") as f:
         f.write(f"- {time.strftime('%Y-%m-%d %H:%M:%S')}  {message}\n")

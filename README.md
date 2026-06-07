@@ -9,7 +9,7 @@ the agent then burns tokens parsing stale history instead of acting. That's cont
 `memory-doctor` doesn't produce memory. It keeps an existing store healthy: a read-only
 **health report**, plus deterministic, reversible **repairs**.
 
-> Positioning: *producers write, the curator keeps it alive.* It complements memory skills,
+> Positioning: *producers write, memory-doctor keeps it alive.* It complements memory skills,
 > it doesn't compete with them.
 
 ## Status — v0.1
@@ -54,8 +54,8 @@ Requires Python ≥ 3.9. No third-party packages.
 
 ## Safety
 
-Every write snapshots the whole directory to `.curator/snapshots/<ts>/` first and logs to
-`.curator/changelog.md`; `undo` restores it. v0.1 only ever performs deterministic index
+Every write snapshots the whole directory to `.memory-doctor/snapshots/<ts>/` first and logs to
+`.memory-doctor/changelog.md`; `undo` restores it. v0.1 only ever performs deterministic index
 reconciliation — no content is rewritten.
 
 ## License

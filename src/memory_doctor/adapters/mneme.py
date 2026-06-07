@@ -12,7 +12,7 @@ A `.mneme` / `.mn` file is a sequence of cells separated by blank lines:
 
 Key differences from auto-memory that this adapter normalizes for the unified report:
   - the spine is *derived*, never a persisted file → store.has_index = False
-    (so the curator must not report "index drift" / index-based orphans here).
+    (so memory-doctor must not report "index drift" / index-based orphans here).
   - each cell carries `state` and `seen` → freshness uses `seen` (the real decay signal),
     and history states (superseded/retired/proposed) are excluded from "active" health.
   - links are typed (relation, target) → kept in rel_links for supersede-symmetry checks.

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Opt-in, read-only memory-health nudge — for a Claude Code SessionStart hook.
 
-It NEVER edits anything. It runs the curator's read-only analysis over a memory dir
+It NEVER edits anything. It runs memory-doctor.s read-only analysis over a memory dir
 and, only when health is below a threshold, prints a one-line nudge so the agent (and
 you) notice rot early and can choose to run `memory-doctor lint --fix` / a v0.2 curate.
 
