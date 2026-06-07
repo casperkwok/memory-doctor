@@ -14,13 +14,22 @@ the agent then burns tokens parsing stale history instead of acting. That's cont
 
 ## Status — v0.1
 
-Zero dependencies, zero LLM, fully reversible. Supports the **Claude Code auto-memory** format
-(frontmatter + `[[wiki-links]]` + `MEMORY.md`).
+Zero dependencies, zero LLM, fully reversible. Two formats, auto-detected:
 
-- `report` — read-only health card: index drift, dead links, orphans, stale notes, oversized
-  files, lexical **duplicate candidates**, and a freshness score.
+- **Claude Code auto-memory** — frontmatter + `[[wiki-links]]` + `MEMORY.md` index.
+- **[mneme](https://github.com/casperkwok/mneme)** — `.mneme` cells with lifecycle
+  (`state`/`conf`/`seen`) and typed `link`s; the spine is derived, so freshness uses `seen`,
+  history cells (superseded/retired) are excluded from active health, and supersede back-link
+  symmetry is checked.
+
+Commands:
+
+- `report` — read-only health card: dead links, stale notes, oversized files, lexical
+  **duplicate candidates**, freshness score, plus per-format checks (auto-memory: index drift,
+  orphans; mneme: history, supersede link symmetry).
 - `lint --fix` — deterministic, safe repair: reconciles the `MEMORY.md` index (adds missing
   entries, drops dangling ones) while preserving your hand-written hooks. Snapshots first.
+  (mneme's spine is derived, so there is no index to reconcile — use `report`.)
 - `undo` — restore the last snapshot.
 
 Semantic operations that need a model — true duplicate **merge**, contradiction **reconcile**,

@@ -18,10 +18,12 @@ class MemUnit:
     body: str                     # markdown body | cell body
     path: str                     # source file on disk
     type: str = "unknown"         # user|feedback|project|reference|unknown
-    state: str = "live"           # live|stale|dead (auto-memory: inferred)
+    state: str = "live"           # live|stale|superseded|retired|proposed (auto-memory: live)
     conf: str = "med"             # high|med|low (auto-memory: default med)
-    links: list[str] = field(default_factory=list)  # outbound [[links]] / supersede ids
-    mtime: float = 0.0            # last-modified epoch seconds (freshness proxy)
+    links: list[str] = field(default_factory=list)  # outbound target ids ([[links]] / link targets)
+    rel_links: list = field(default_factory=list)    # mneme: list of (relation, target_id)
+    topic: str = ""               # mneme topic-path; "" for auto-memory
+    mtime: float = 0.0            # freshness epoch: mneme uses `seen` date, auto-memory file mtime
     raw_frontmatter: dict = field(default_factory=dict)
 
     @property
@@ -45,6 +47,7 @@ class MemoryStore:
     units: list[MemUnit] = field(default_factory=list)
     index: list[IndexEntry] = field(default_factory=list)
     index_path: Optional[str] = None
+    has_index: bool = True        # auto-memory: persisted MEMORY.md (drifts). mneme: spine is derived
 
     def unit_by_id(self, uid: str) -> Optional[MemUnit]:
         for u in self.units:

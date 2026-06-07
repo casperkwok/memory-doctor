@@ -32,6 +32,10 @@ def cmd_report(args):
 
 def cmd_lint(args):
     root, store = _load(args)
+    if not store.has_index:
+        print(f"lint: '{store.fmt}' has a derived spine (no persisted index to reconcile) — "
+              "nothing to fix. Use `report` for health, or mneme's own tool for spine/lint.")
+        return
     plan = lint_mod.plan_index(store)
     if not plan.changed:
         print("✓ index is in sync — nothing to fix.")
@@ -69,7 +73,7 @@ def main(argv=None):
 
     def add_common(sp):
         sp.add_argument("--dir", required=True, help="memory directory")
-        sp.add_argument("--format", choices=["auto-memory"], default=None)
+        sp.add_argument("--format", choices=["auto-memory", "mneme"], default=None)
 
     sp = sub.add_parser("report", help="read-only health card"); add_common(sp)
     sp.set_defaults(func=cmd_report)
