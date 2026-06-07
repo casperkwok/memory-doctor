@@ -1,7 +1,7 @@
 ---
 name: memory-doctor
 description: Keep an LLM agent's long-term memory healthy — the cure for context rot. Use when a memory store exists and the user wants to check or tidy it ("记忆体检", "整理记忆", "memory health", "memory cleanup", "dedup memory", "fix MEMORY.md index"), or whenever memory has grown long, contradictory, or its index drifted. Runs a read-only health report and safe, reversible repairs. Supports the Claude Code auto-memory format (frontmatter + [[links]] + MEMORY.md) and the mneme format (.mneme cells). Zero dependencies, zero LLM in v0.1.
-version: 0.1.0
+version: 0.1.1
 ---
 
 # memory-doctor — keep agent memory healthy
