@@ -1,9 +1,9 @@
-"""memory-curator CLI.
+"""memory-doctor CLI.
 
-  memory-curator report  --dir PATH        read-only health card
-  memory-curator lint    --dir PATH        show the index-reconciliation plan (no write)
-  memory-curator lint    --dir PATH --fix  apply it (snapshots first, reversible)
-  memory-curator undo    --dir PATH        restore the last snapshot
+  memory-doctor report  --dir PATH        read-only health card
+  memory-doctor lint    --dir PATH        show the index-reconciliation plan (no write)
+  memory-doctor lint    --dir PATH --fix  apply it (snapshots first, reversible)
+  memory-doctor undo    --dir PATH        restore the last snapshot
 """
 
 from __future__ import annotations
@@ -66,9 +66,9 @@ def cmd_undo(args):
 
 
 def main(argv=None):
-    p = argparse.ArgumentParser(prog="memory-curator",
+    p = argparse.ArgumentParser(prog="memory-doctor",
                                 description="Keep LLM-agent long-term memory healthy.")
-    p.add_argument("--version", action="version", version=f"memory-curator {__version__}")
+    p.add_argument("--version", action="version", version=f"memory-doctor {__version__}")
     sub = p.add_subparsers(dest="cmd", required=True)
 
     def add_common(sp):

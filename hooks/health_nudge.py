@@ -3,7 +3,7 @@
 
 It NEVER edits anything. It runs the curator's read-only analysis over a memory dir
 and, only when health is below a threshold, prints a one-line nudge so the agent (and
-you) notice rot early and can choose to run `memory-curator lint --fix` / a v0.2 curate.
+you) notice rot early and can choose to run `memory-doctor lint --fix` / a v0.2 curate.
 
 Why a hook at all: a probabilistic reader won't keep memory tidy on its own; a machine
 should watch it. Why read-only: auto-editing memory is the #1 trust risk (see SPEC D2).
@@ -14,7 +14,7 @@ Wire it up (opt-in) in ~/.claude/settings.json:
       "hooks": {
         "SessionStart": [
           { "hooks": [ { "type": "command",
-              "command": "python3 /path/to/memory-curator/hooks/health_nudge.py --dir ~/.claude/.../memory" } ] }
+              "command": "python3 /path/to/memory-doctor/hooks/health_nudge.py --dir ~/.claude/.../memory" } ] }
         ]
       }
     }
@@ -31,13 +31,13 @@ import sys
 # Make the bundled/sibling package importable whether run from repo or installed skill.
 _HERE = os.path.dirname(os.path.abspath(__file__))
 for cand in (os.path.join(_HERE, "..", "src"), os.path.join(_HERE, "..", "skill", "scripts")):
-    if os.path.isdir(os.path.join(cand, "memory_curator")):
+    if os.path.isdir(os.path.join(cand, "memory_doctor")):
         sys.path.insert(0, os.path.abspath(cand))
         break
 
 try:
-    from memory_curator.adapters import detect_format, get_adapter
-    from memory_curator.report import analyze
+    from memory_doctor.adapters import detect_format, get_adapter
+    from memory_doctor.report import analyze
 except Exception:
     sys.exit(0)  # never break a session because the nudge couldn't load
 
@@ -72,8 +72,8 @@ def main():
         issues.append(f"{len(rep.dup_candidates)} duplicate candidate(s)")
 
     if issues:
-        print(f"🧠 memory-curator: {store.fmt} store health — " + "; ".join(issues)
-              + ". Run `memory-curator report --dir <dir>` for details.", file=sys.stderr)
+        print(f"🧠 memory-doctor: {store.fmt} store health — " + "; ".join(issues)
+              + ". Run `memory-doctor report --dir <dir>` for details.", file=sys.stderr)
     sys.exit(0)
 
 

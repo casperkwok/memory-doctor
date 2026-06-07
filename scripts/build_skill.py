@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Sync the package into the publishable skill so the skill is self-contained.
 
-Single source of truth is src/memory_curator/. The skill bundle (skill/scripts/) is
+Single source of truth is src/memory_doctor/. The skill bundle (skill/scripts/) is
 generated — do not edit it by hand. Run this after changing src/, then commit.
 """
 
@@ -9,12 +9,12 @@ import os
 import shutil
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SRC = os.path.join(ROOT, "src", "memory_curator")
-DEST = os.path.join(ROOT, "skill", "scripts", "memory_curator")
+SRC = os.path.join(ROOT, "src", "memory_doctor")
+DEST = os.path.join(ROOT, "skill", "scripts", "memory_doctor")
 ENTRY = os.path.join(ROOT, "skill", "scripts", "curate.py")
 
 ENTRY_SRC = '''#!/usr/bin/env python3
-"""Self-contained entrypoint for the bundled memory-curator skill.
+"""Self-contained entrypoint for the bundled memory-doctor skill.
 
     python scripts/curate.py report --dir <memory-dir>
     python scripts/curate.py lint   --dir <memory-dir> [--fix]
@@ -22,7 +22,7 @@ ENTRY_SRC = '''#!/usr/bin/env python3
 """
 import os, sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from memory_curator.cli import main
+from memory_doctor.cli import main
 
 if __name__ == "__main__":
     main()

@@ -1,4 +1,4 @@
-# memory-curator
+# memory-doctor
 
 **A maintenance layer for LLM-agent long-term memory — the cure for context rot.**
 
@@ -6,7 +6,7 @@ Memory skills *write* memory. Almost none *keep it healthy*. Over time an agent'
 store grows long, contradicts itself, sprouts dead links, and the index drifts out of sync —
 the agent then burns tokens parsing stale history instead of acting. That's context rot.
 
-`memory-curator` doesn't produce memory. It keeps an existing store healthy: a read-only
+`memory-doctor` doesn't produce memory. It keeps an existing store healthy: a read-only
 **health report**, plus deterministic, reversible **repairs**.
 
 > Positioning: *producers write, the curator keeps it alive.* It complements memory skills,
@@ -40,14 +40,14 @@ no embeddings; manual-apply, snapshot-backed).
 
 ```bash
 # read-only — safe to run anytime
-python -m memory_curator report --dir ~/.claude/.../memory
+python -m memory_doctor report --dir ~/.claude/.../memory
 
 # preview the index fix, then apply (a snapshot is taken first)
-python -m memory_curator lint --dir ~/.claude/.../memory
-python -m memory_curator lint --dir ~/.claude/.../memory --fix
+python -m memory_doctor lint --dir ~/.claude/.../memory
+python -m memory_doctor lint --dir ~/.claude/.../memory --fix
 
 # revert
-python -m memory_curator undo --dir ~/.claude/.../memory
+python -m memory_doctor undo --dir ~/.claude/.../memory
 ```
 
 Requires Python ≥ 3.9. No third-party packages.
